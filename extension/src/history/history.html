@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meet Not Alma Botu - Geçmiş</title>
+  <link rel="stylesheet" href="history.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__brand">
+      <img src="../../icons/icon48.png" width="28" height="28" alt="">
+      <div>
+        <h1 class="topbar__title">Kayıt Geçmişi</h1>
+        <p class="topbar__subtitle">Meet Not Alma Botu</p>
+      </div>
+    </div>
+    <div class="topbar__actions">
+      <button type="button" class="btn btn--primary" id="copyBtn" disabled>Transkripti Kopyala</button>
+      <button type="button" class="btn" id="copyAiBtn" disabled title="Hazır özet istemi + transkript. Yapay zekâya yapıştırıp gönderin.">Yapay zekâ için kopyala (istem + transkript)</button>
+      <button type="button" class="btn btn--danger" id="deleteBtn" disabled>Oturumu sil</button>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- sol: oturum listesi -->
+    <aside class="sidebar">
+      <div class="sidebar__search">
+        <input type="search" id="searchInput" placeholder="Başlık, toplantı kodu veya metin ara..." autocomplete="off">
+      </div>
+      <div class="sidebar__count" id="listCount"></div>
+      <ul class="session-list" id="sessionList"></ul>
+      <p class="sidebar__empty" id="emptyState" hidden>
+        Henüz kayıt yok. Meet'te altyazıları açıp kaydı başlatın.
+      </p>
+    </aside>
+
+    <!-- sağ: oturum detayı -->
+    <section class="detail" id="detail">
+      <div class="detail__placeholder" id="detailPlaceholder">
+        Soldaki listeden bir oturum seçin.
+      </div>
+
+      <div class="detail__content" id="detailContent" hidden>
+        <div class="detail__header">
+          <div class="detail__titleRow">
+            <input type="text" id="titleInput" class="detail__titleInput" maxlength="120" aria-label="Oturum başlığı">
+            <button type="button" class="btn btn--small" id="saveTitleBtn">Başlığı kaydet</button>
+          </div>
+          <div class="detail__meta" id="sessionMeta"></div>
+          <div class="detail__exports">
+            <span class="detail__exportsLabel">İndir:</span>
+            <button type="button" class="btn btn--small" data-format="txt">TXT</button>
+            <button type="button" class="btn btn--small" data-format="md">MD</button>
+            <button type="button" class="btn btn--small" data-format="json">JSON</button>
+            <button type="button" class="btn btn--small" data-format="srt">SRT</button>
+            <button type="button" class="btn btn--small" data-format="vtt">VTT</button>
+          </div>
+          <p class="detail__note">
+            "Yapay zekâ için kopyala" düğmesi hazır özet istemini ve transkripti panoya koyar.
+            Metni kendi yapay zekânıza (Gemini, ChatGPT, Claude…) yapıştırıp gönderin.
+          </p>
+        </div>
+
+        <div class="transcript" id="transcript"></div>
+        <p class="transcript__empty" id="transcriptEmpty" hidden>Bu oturumda kayıtlı satır yok.</p>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="../lib/protocol.js"></script>
+  <script src="../lib/formatters.js"></script>
+  <script src="../lib/utils.js"></script>
+  <script src="../lib/storage.js"></script>
+  <script src="history.js"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+Aşağıda bir Google Meet toplantısının otomatik altyazıdan alınmış transkripti var.
+Görevin: toplantıya katılan birinin 5 dakikada okuyup işine yarayacak KISA bir not çıkarmak. Transkripti yeniden anlatmanı ya da her şeyi kaydetmeni değil, işe yarayanı seçmeni istiyorum.
+
+ÖNCE TÜRÜ BELİRLE (kullanıcıya yazma, kendin karar ver):
+- EĞİTİM / SUNUM / WEBİNAR: bir kişi ağırlıklı olarak anlatıyor, diğerleri dinliyor ya da soru soruyor.
+- ÇALIŞMA TOPLANTISI: karar, iş paylaşımı ve tartışma var.
+
+EĞİTİM / SUNUM İSE şu başlıklarla yaz:
+1. Ne öğretildi: 2-3 cümle.
+2. Akılda kalması gereken 7-10 şey: her biri kısa bir başlık ve 1-2 cümle. Genel yöntem ya da bilgi olarak yaz; kimin hangi soruyu sorduğunu yazma.
+3. Uygulama adımları: anlatılan yöntemi kendi işinde uygulamak isteyen biri için sıralı, kısa adımlar ya da kontrol listesi (varsa).
+4. Dikkat edilecekler ve sık yapılan hatalar (varsa).
+5. Önemli örnek ve sayılar: en fazla 3.
+6. Eğitmenin verdiği ödev, kaynak ya da sonraki adım (yoksa bu başlığı hiç yazma).
+
+ÇALIŞMA TOPLANTISI İSE şu başlıklarla yaz:
+1. Özet: en fazla 3 cümle.
+2. Alınan kararlar.
+3. Aksiyonlar: ne, kim, ne zamana kadar (söylenmediyse "belirtilmedi"). Yalnızca açıkça söylenenleri yaz.
+4. Açık kalan konular.
+
+KURALLAR
+- Uzunluk: en fazla yaklaşık 500 kelime (bir sayfa). Toplantı ne kadar uzun olursa olsun bu sınırı aşma. Tablo kullanma, madde madde yaz.
+- Katılımcıların kendilerini tanıtmasını, kişisel projelerini, hikâyelerini, tek tek kim ne dedi bilgisini, selamlaşmayı ve ses/bağlantı sorunlarını yazma. Kişi adı yalnızca karar ya da aksiyonun sahibini belirtmek için kullanılır.
+- Zaman damgası, konu akışı tablosu, katılımcı listesi ve "şüpheli yerler" listesi yazma.
+- Yalnızca transkriptte geçen bilgiyi kullan; uydurma, dışarıdan bilgi ekleme. Altyazı otomatik üretildiği için bozuk kelimeler olabilir: anlamı bağlamdan çıkarabiliyorsan düzelterek yaz, çıkaramıyorsan o kısmı atla. Emin olmadığın özel isim ya da sayının yanına (?) koy.
+- Telefon, e-posta, adres gibi kişisel bilgileri yazma.
+- Dil: sade Türkçe.
+
+Transkript aşağıdadır.

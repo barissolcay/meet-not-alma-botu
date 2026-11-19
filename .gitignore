@@ -1,0 +1,9 @@
+node_modules/
+*.log
+.DS_Store
+Thumbs.db
+
+# Kişisel veri: kayıtlı transkriptler ve günlükler repoya girmesin
+meet-transkript-*.txt
+meet-planli-katilim-gunlugu-*.txt
+*.zip

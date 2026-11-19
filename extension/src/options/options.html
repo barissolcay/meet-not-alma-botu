@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meet Not Alma Botu - Ayarlar</title>
+  <style>
+    :root {
+      --bg: #0f1226;
+      --card: #1d2140;
+      --border: #2c3157;
+      --text: #eef0ff;
+      --text-dim: #a3a8cf;
+      --accent: #7c5cff;
+      --danger: #f0536a;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .wrap { max-width: 640px; margin: 0 auto; padding: 28px 20px 40px; }
+    header { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+    header img { border-radius: 10px; }
+    h1 { margin: 0; font-size: 18px; }
+    header p { margin: 2px 0 0; color: var(--text-dim); font-size: 12px; }
+    form { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; }
+    .field { padding: 12px 0; border-bottom: 1px solid var(--border); }
+    .field:last-of-type { border-bottom: none; }
+    .field label { display: block; font-weight: 600; margin-bottom: 4px; }
+    .field .hint { margin: 4px 0 0; color: var(--text-dim); font-size: 12px; }
+    input[type="number"], input[type="text"] {
+      width: 180px;
+      padding: 7px 9px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #141732;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 13px;
+    }
+    input:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+    .check { display: flex; align-items: flex-start; gap: 9px; }
+    .check input { margin-top: 3px; accent-color: var(--accent); }
+    .check label { font-weight: 500; margin: 0; }
+    .actions { display: flex; gap: 10px; margin-top: 18px; }
+    button {
+      padding: 9px 16px;
+      border-radius: 9px;
+      border: 1px solid var(--border);
+      background: #232750;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover { filter: brightness(1.18); }
+    .btn-primary { background: linear-gradient(135deg, var(--accent), #4d7cff); border-color: #6a53d8; color: #fff; }
+    .btn-ghost { background: transparent; color: var(--text-dim); }
+    .error { color: #ff9aa9; font-size: 12px; margin: 6px 0 0; min-height: 16px; }
+    .toast {
+      position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%);
+      padding: 10px 16px; border-radius: 10px; background: #262b52;
+      border: 1px solid var(--border); font-size: 13px; box-shadow: 0 10px 24px rgba(0,0,0,.45);
+    }
+    .toast--error { background: #4a2030; border-color: #7d2f42; color: #ffc6cf; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <img src="../../icons/icon48.png" width="36" height="36" alt="">
+      <div>
+        <h1>Meet Not Alma Botu Ayarları</h1>
+        <p>Altyazı okuma ve kayıt davranışını buradan yönetin.</p>
+      </div>
+    </header>
+
+    <form id="settingsForm" novalidate>
+      <div class="field">
+        <label for="graceMs">Satır birleştirme süresi (ms)</label>
+        <input type="number" id="graceMs" name="graceMs" min="500" max="5000" step="100">
+        <p class="hint">Altyazılar canlı akışta bölünür. Bu süre dolmadan gelen parçalar aynı satırda birleştirilir (500–5000 ms, varsayılan 2500). Konuşma hızlıysa artırabilirsiniz.</p>
+      </div>
+
+      <div class="field">
+        <label for="speakerFallback">Konuşmacı bilinmiyorsa</label>
+        <input type="text" id="speakerFallback" name="speakerFallback" maxlength="60">
+        <p class="hint">Meet konuşmacı adı vermediğinde kullanılacak etiket (varsayılan: Bilinmeyen).</p>
+      </div>
+
+      <div class="field">
+        <label for="localSpeakerName">Yerel kullanıcı adı</label>
+        <input type="text" id="localSpeakerName" name="localSpeakerName" maxlength="60">
+        <p class="hint">Meet kendi konuşmalarınızı "Siz" gibi yerel etiketlerle gösterir. Bu etiketler dışa aktarımda bu adda gösterilir (varsayılan: Ben).</p>
+      </div>
+
+      <div class="field check">
+        <input type="checkbox" id="includeTimestamps" name="includeTimestamps">
+        <div>
+          <label for="includeTimestamps">Dışa aktarımda zaman damgası olsun</label>
+          <p class="hint">Kapalıyken TXT/MD çıktısında satırlar [00:00:00] biçiminde işaretlenmez.</p>
+        </div>
+      </div>
+
+      <div class="field check">
+        <input type="checkbox" id="junkFilter" name="junkFilter">
+        <div>
+          <label for="junkFilter">Altyazı gürültülerini temizle</label>
+          <p class="hint">Tekrarlanan, yalnızca noktalama veya boşluk içeren parçaları atar.</p>
+        </div>
+      </div>
+
+      <div class="field check">
+        <input type="checkbox" id="autoStartOnCc" name="autoStartOnCc">
+        <div>
+          <label for="autoStartOnCc">Meet'te altyazılar açıldığında kaydı otomatik başlat</label>
+          <p class="hint">Açıkken Meet sayfasında altyazılar etkinleştiğinde kayıt kendiliğinden başlar ve altyazılar kapanınca durur.</p>
+        </div>
+      </div>
+
+      <div class="field check">
+        <input type="checkbox" id="autoStopWhenAlone" name="autoStopWhenAlone">
+        <div>
+          <label for="autoStopWhenAlone">Toplantıda yalnız kalınca kaydı durdur</label>
+          <p class="hint">Başkaları toplantıdan çıkıp yaklaşık 5 dakika boyunca görüşmede yalnız kalırsanız kayıt durur (planlı katılımda eklenti toplantıdan ayrılır). Mola veren katılımcılar görüşmede kaldığı sürece durmaz.</p>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="autoStopSilenceMin">Şu kadar dakika hiç konuşma gelmezse kaydı durdur (0 = kapalı)</label>
+        <input type="number" id="autoStopSilenceMin" name="autoStopSilenceMin" min="0" max="240" step="5">
+        <p class="hint">Varsayılan kapalı. Açarsanız 10–240 dakika arası bir değer girin; uzun molaları ve sessiz alıştırmaları aşacak kadar yüksek tutun (ör. 45). Uzun süren tek kişilik anlatım sessizlik sayılmaz.</p>
+      </div>
+
+      <div class="field">
+        <label for="maxStoredSessions">Saklanacak azami oturum sayısı</label>
+        <input type="number" id="maxStoredSessions" name="maxStoredSessions" min="1" max="1000" step="1">
+        <p class="hint">Bu sayı aşıldığında en eski oturumlar otomatik silinir.</p>
+      </div>
+
+      <p class="error" id="formError"></p>
+
+      <div class="actions">
+        <button type="submit" class="btn-primary" id="saveBtn">Kaydet</button>
+        <button type="button" class="btn-ghost" id="resetBtn">Varsayılanlara dön</button>
+      </div>
+    </form>
+
+    <div class="field" id="traceSection">
+      <label>Planlı katılım günlüğü</label>
+      <p class="hint">Planlı katılım takılırsa nedenini bulmak için adım adım kayıt tutulur: alarm, sekme, sayfada görünen düğmeler ve basılanlar. Altyazı metni yazılmaz. Veriler yalnızca bu bilgisayarda kalır; son 600 kayıt saklanır.</p>
+      <p class="hint" id="traceInfo"></p>
+      <div class="actions">
+        <button type="button" class="btn-primary" id="traceDownloadBtn">Günlüğü indir (.txt)</button>
+        <button type="button" class="btn-ghost" id="traceClearBtn">Günlüğü temizle</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="../lib/protocol.js"></script>
+  <script src="../lib/settings.js"></script>
+  <script src="../lib/storage.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

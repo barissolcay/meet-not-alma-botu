@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Meet Not Alma Botu</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app">
+    <header class="app__header">
+      <div class="brand">
+        <img class="brand__logo" src="../../icons/icon48.png" width="30" height="30" alt="">
+        <div class="brand__text">
+          <h1 class="brand__title">Meet Not Alma Botu</h1>
+          <p class="brand__subtitle">Canlı altyazıdan transkript</p>
+        </div>
+      </div>
+      <span id="statusPill" class="pill pill--idle">Durduruldu</span>
+    </header>
+
+    <!-- Meet sekmesi değilse gösterilir -->
+    <section id="notMeetNotice" class="notice notice--info" hidden>
+      <strong>Bir Meet sekmesine geçin.</strong>
+      <span>Popup yalnızca Google Meet toplantı sayfasında çalışır.</span>
+    </section>
+
+    <!-- İçerik betiği yoksa gösterilir -->
+    <section id="reloadNotice" class="notice notice--info" hidden>
+      <strong>Sayfayı yenileyin.</strong>
+      <span>Eklenti yeni yüklendiyse Meet sekmesinde <kbd>F5</kbd> tuşuna basın.</span>
+    </section>
+
+    <section class="card">
+      <div class="card__row">
+        <span class="card__label">Kayıt durumu</span>
+        <strong id="recordState" class="card__value">Durduruldu</strong>
+      </div>
+      <div class="card__row">
+        <span class="card__label">Canlı satır</span>
+        <strong id="lineCount" class="card__value">0</strong>
+      </div>
+      <div class="card__row">
+        <span class="card__label">Toplantı kodu</span>
+        <strong id="meetingCode" class="card__value">—</strong>
+      </div>
+      <a id="meetingLink" class="card__link" href="#" target="_blank" rel="noreferrer" hidden></a>
+    </section>
+
+    <!-- Altyazı bölgesi bulunamadıysa (CC kapalı) gösterilir -->
+    <section id="ccWarning" class="notice notice--warn" hidden>
+      <span>Meet'te <strong>'Altyazılar' (CC)</strong> düğmesini açın — kayıt için gerekli.</span>
+      <button id="toggleCcBtn" type="button" class="btn btn--ghost btn--small">Altyazıları açmayı dene</button>
+    </section>
+
+    <!-- CC açık ama henüz okunabilir altyazı bloğu yok (daha yumuşak uyarı) -->
+    <section id="ccUnreadable" class="notice notice--warn" hidden>
+      <span>Meet'te altyazılar <strong>açık</strong>, ancak henüz okunabilir altyazı satırı yok. Konuşma başlayınca döküm akacak. Altyazılar hiç görünmüyorsa Meet arayüzü değişmiş olabilir.</span>
+    </section>
+
+    <section class="actions">
+      <button id="startBtn" type="button" class="btn btn--primary">Kaydı Başlat</button>
+      <button id="stopBtn" type="button" class="btn btn--danger" hidden>Kaydı Durdur</button>
+    </section>
+
+    <section class="actions actions--wrap">
+      <button id="copyBtn" type="button" class="btn">Transkripti Kopyala</button>
+      <button id="copyAiBtn" type="button" class="btn" title="Hazır özet istemi + transkript. Yapay zekâya yapıştırıp gönderin.">Yapay Zekâ İçin Kopyala</button>
+      <button id="historyBtn" type="button" class="btn">Geçmişi Aç</button>
+      <button id="optionsBtn" type="button" class="btn btn--ghost">Ayarlar</button>
+    </section>
+
+    <section class="exports">
+      <h2 class="exports__title">Dışa aktar</h2>
+      <div class="exports__grid">
+        <button type="button" class="btn btn--small" data-format="txt">TXT</button>
+        <button type="button" class="btn btn--small" data-format="md">MD</button>
+        <button type="button" class="btn btn--small" data-format="json">JSON</button>
+        <button type="button" class="btn btn--small" data-format="srt">SRT</button>
+        <button type="button" class="btn btn--small" data-format="vtt">VTT</button>
+      </div>
+    </section>
+
+    <section class="card schedule" aria-labelledby="scheduleTitle">
+      <h2 id="scheduleTitle" class="exports__title">Planlı katılım</h2>
+      <label class="schedule__label" for="scheduleUrl">Meet bağlantısı</label>
+      <input id="scheduleUrl" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://meet.google.com/abc-defg-hij">
+      <label class="schedule__label" for="scheduleStart">Başlangıç</label>
+      <input id="scheduleStart" type="datetime-local">
+      <label class="schedule__label" for="scheduleEnd">Bitiş (isteğe bağlı)</label>
+      <input id="scheduleEnd" type="datetime-local">
+      <button id="scheduleSave" type="button" class="btn btn--primary">Katılımı kaydet</button>
+      <p id="scheduleError" class="schedule__error" hidden></p>
+      <p class="schedule__hint">Chrome açık ve Google hesabınız girişli olmalı. Mikrofon ve kamera kapalı katılınır (durumları okunamazsa katılınmaz). Bilgisayar uyku modundan uyandırılmaz. Toplantı sahibine ve katılımcılara not alındığını önceden bildirin.</p>
+      <ul id="scheduleList" class="schedule__list" aria-live="polite"></ul>
+    </section>
+
+    <footer class="app__footer">
+      <span>Ses kaydedilmez, ağ isteği yapılmaz. Planlı katılım sizin hesabınızla, mikrofon ve kamera kapalı olur.</span>
+    </footer>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="../lib/protocol.js"></script>
+  <script src="../lib/formatters.js"></script>
+  <script src="../lib/utils.js"></script>
+  <script src="../lib/schedule.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>

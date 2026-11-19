@@ -1,0 +1,353 @@
+/* Meet Not Alma Botu - popup stilleri */
+
+:root {
+  --bg: #0f1226;
+  --bg-soft: #171a33;
+  --card: #1d2140;
+  --border: #2c3157;
+  --text: #eef0ff;
+  --text-dim: #a3a8cf;
+  --accent: #7c5cff;
+  --accent-2: #22d3ee;
+  --danger: #f0536a;
+  --warn-bg: #4a3a12;
+  --warn-text: #ffe6a3;
+  --info-bg: #1d2a4a;
+  --info-text: #bcd4ff;
+  --radius: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  width: 380px;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.app {
+  padding: 14px 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ---------------- başlık ---------------- */
+
+.app__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.brand__logo {
+  border-radius: 8px;
+  display: block;
+}
+
+.brand__title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+
+.brand__subtitle {
+  margin: 0;
+  font-size: 11px;
+  color: var(--text-dim);
+}
+
+.pill {
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  border: 1px solid transparent;
+}
+
+.pill--idle {
+  background: #262a4d;
+  color: var(--text-dim);
+  border-color: var(--border);
+}
+
+.pill--live {
+  background: rgba(242, 83, 106, 0.15);
+  color: #ff97a8;
+  border-color: rgba(242, 83, 106, 0.5);
+}
+
+/* ---------------- kart ---------------- */
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+}
+
+.card__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 3px 0;
+}
+
+.card__label {
+  color: var(--text-dim);
+}
+
+.card__value {
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  word-break: break-all;
+}
+
+.card__link {
+  display: block;
+  margin-top: 6px;
+  color: var(--accent-2);
+  font-size: 11px;
+  word-break: break-all;
+  text-decoration: none;
+}
+
+.card__link:hover {
+  text-decoration: underline;
+}
+
+/* ---------------- bildirimler ---------------- */
+
+.notice {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  border-radius: var(--radius);
+  padding: 9px 11px;
+  font-size: 12px;
+}
+
+.notice--warn {
+  background: var(--warn-bg);
+  color: var(--warn-text);
+  border: 1px solid #6b5418;
+}
+
+.notice--info {
+  background: var(--info-bg);
+  color: var(--info-text);
+  border: 1px solid #2f4675;
+}
+
+.notice kbd {
+  background: #0f1226;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0 4px;
+  font-size: 11px;
+}
+
+/* ---------------- düğmeler ---------------- */
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.actions--wrap {
+  flex-wrap: wrap;
+}
+
+.btn {
+  flex: 1 1 auto;
+  min-width: 96px;
+  padding: 8px 10px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg-soft);
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: filter 0.15s ease, opacity 0.15s ease;
+}
+
+.btn:hover:not(:disabled) {
+  filter: brightness(1.18);
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.btn--primary {
+  background: linear-gradient(135deg, var(--accent), #4d7cff);
+  border-color: #6a53d8;
+  color: #fff;
+}
+
+.btn--danger {
+  background: linear-gradient(135deg, var(--danger), #c8394f);
+  border-color: #d3435a;
+  color: #fff;
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--text-dim);
+}
+
+.btn--small {
+  flex: 0 0 auto;
+  min-width: 0;
+  padding: 6px 12px;
+  font-size: 11px;
+}
+
+/* ---------------- dışa aktarma ---------------- */
+
+.exports__title {
+  margin: 0 0 6px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.exports__grid {
+  display: flex;
+  gap: 6px;
+}
+
+.exports__grid .btn {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+/* ---------------- alt bilgi ---------------- */
+
+.app__footer {
+  color: #6f7599;
+  font-size: 10.5px;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  padding-top: 8px;
+}
+
+/* ---------------- toast ---------------- */
+
+.toast {
+  position: fixed;
+  left: 12px;
+  right: 12px;
+  bottom: 12px;
+  padding: 9px 12px;
+  border-radius: var(--radius);
+  background: #262b52;
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 12px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.45);
+  z-index: 20;
+}
+
+.toast--error {
+  background: #4a2030;
+  border-color: #7d2f42;
+  color: #ffc6cf;
+}
+
+/* ---------------- planlı katılım ---------------- */
+
+.schedule__label {
+  display: block;
+  margin-top: 6px;
+  color: var(--text-dim);
+  font-size: 12px;
+}
+
+.schedule input {
+  width: 100%;
+  margin: 3px 0 6px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: #141732;
+  color: var(--text);
+  font: inherit;
+}
+
+.schedule input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.schedule .btn {
+  width: 100%;
+  margin-top: 4px;
+}
+
+.schedule__error {
+  margin: 6px 0 0;
+  color: #ff9aa9;
+  font-size: 12px;
+}
+
+.schedule__hint {
+  margin: 8px 0 0;
+  color: var(--text-dim);
+  font-size: 11px;
+}
+
+.schedule__list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.schedule__item {
+  border-top: 1px solid var(--border);
+  padding-top: 6px;
+}
+
+.schedule__title {
+  font-weight: 600;
+  word-break: break-all;
+}
+
+.schedule__status {
+  color: var(--text-dim);
+  font-size: 12px;
+  margin: 2px 0 4px;
+}
+
+.schedule__empty {
+  color: var(--text-dim);
+  font-size: 12px;
+}
+
+.schedule__item .btn {
+  width: auto;
+}
