@@ -12,10 +12,10 @@ A small, **fully local** Chrome extension (Manifest V3) that helps you attend me
 
 ## Install (2 minutes)
 
-1. On this GitHub page click **Code → Download ZIP** and extract it to a folder.
+1. Download `meet-not-alma-botu-v1.0.0.zip` from **Releases → v1.0.0** (right side of this page) and extract it.
 2. In Chrome open `chrome://extensions`.
 3. Turn on **Developer mode** (top right).
-4. Click **Load unpacked** and choose the **`extension`** folder inside the extracted folder.
+4. Click **Load unpacked** and choose the extracted folder (it should contain `manifest.json`).
 5. Pin the extension from the puzzle-piece 🧩 menu.
 
 Keep the folder in place (Chrome runs the extension from it). To update: extract the new ZIP over it, press ↻ on `chrome://extensions`, and refresh open Meet tabs.

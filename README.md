@@ -10,9 +10,9 @@
 
 ## Kurulum
 
-1. Bu sayfada **Code → Download ZIP** ile indirin ve klasöre çıkarın.
+1. Sağ taraftaki **Releases → v1.0.0** altından `meet-not-alma-botu-v1.0.0.zip` dosyasını indirip klasöre çıkarın.
 2. Chrome'da `chrome://extensions` açın, sağ üstten **Geliştirici modu**'nu açın.
-3. **Paketlenmemiş öğe yükle** → çıkardığınız klasörün içindeki **`extension`** klasörünü seçin.
+3. **Paketlenmemiş öğe yükle** → çıkan klasörü seçin (içinde `manifest.json` görünmeli).
 4. Yapboz 🧩 simgesinden eklentiyi sabitleyin. Açık Meet sekmeniz varsa yenileyin.
 
 Klasörü silmeyin ya da taşımayın; güncellemek için yeni ZIP'i üzerine çıkarıp `chrome://extensions` sayfasında ↻ düğmesine basın.
