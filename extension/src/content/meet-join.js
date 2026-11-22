@@ -668,6 +668,31 @@
     return false;
   }
 
+  /** «Görüşmeye katılma isteğinizi kimse yanıtlamadı»: bekleme odası zaman aşımına uğradı. */
+  function isRequestTimedOut(doc) {
+    var text = both(textOutsideControls(doc && doc.body));
+    return (
+      text.indexOf('isteğinizi kimse yanıtlamadı') !== -1 ||
+      text.indexOf('isteginizi kimse yanitlamadi') !== -1 ||
+      text.indexOf('no one responded to your request') !== -1 ||
+      text.indexOf('nobody responded to your request') !== -1
+    );
+  }
+
+  /** Meet ana sayfası ya da açılış ekranı: toplantı odasında değiliz. */
+  function isLostPage(doc) {
+    var path = '';
+    try {
+      path = String((doc && doc.location && doc.location.pathname) || '');
+    } catch (err) {
+      path = '';
+    }
+    if (!path) {
+      return false;
+    }
+    return path === '/' || path === '/home' || path === '/landing' || path.indexOf('/landing/') === 0;
+  }
+
   function findJoin(doc) {
     var buttons = controls(doc);
     for (var i = 0; i < buttons.length; i += 1) {
@@ -1495,11 +1520,53 @@
       });
     }
 
+    var REOPEN_GAP_MS = 20000;
+    var lastReopenAt = null;
+
+    /**
+     * Bekleme odası zaman aşımına uğradıysa ya da Meet ana sayfasına düşüldüyse
+     * toplantı bağlantısı yeniden açılır (katılma isteği yeniden gönderilir).
+     * Süre dolana kadar, en fazla REOPEN_GAP_MS aralıkla tekrarlanır.
+     */
+    function reopenIfLost() {
+      if (typeof options.reopen !== 'function') {
+        return null;
+      }
+      var reason = null;
+      if (isRequestTimedOut(doc)) {
+        reason = 'timeout';
+      } else if (isLostPage(doc) && !isInCall(doc)) {
+        reason = 'lost-page';
+      }
+      if (!reason) {
+        return null;
+      }
+      var at = now();
+      if (deadlineAt !== null && at > deadlineAt) {
+        return finishExpired();
+      }
+      if (lastReopenAt === null || at - lastReopenAt >= REOPEN_GAP_MS) {
+        lastReopenAt = at;
+        emit('reopen', { reason: reason });
+        try {
+          options.reopen(reason);
+        } catch (err) {
+          /* yeniden açma başarısızsa sonraki yoklamada tekrar denenir */
+        }
+      }
+      phase = 'looking';
+      return Promise.resolve(phase);
+    }
+
     function tick() {
       if (stopped) {
         return Promise.resolve(phase);
       }
       traceSnapshot();
+      var lost = reopenIfLost();
+      if (lost) {
+        return lost;
+      }
       var ended = endReason(pageText(doc), !!findLeave(doc));
       if (ended) {
         return finishEnd(ended);

@@ -38,7 +38,7 @@ extension/
     settings.js                 Varsayılan ayarlar
     formatters.js               TXT/MD/JSON/SRT/VTT üreticileri
     utils.js                    Saf yardımcılar (dosya adı, arama, süre biçimi)
-    schedule.js                 Planlı katılım kuralları (bağlantı, 30 dk pencere, durum metinleri)
+    schedule.js                 Planlı katılım kuralları (bağlantı, 60 dk pencere, durum metinleri)
   src/popup/                    Araç çubuğu arayüzü
   src/options/                  Ayarlar
   src/history/                  Oturum geçmişi + transkript görüntüleyici

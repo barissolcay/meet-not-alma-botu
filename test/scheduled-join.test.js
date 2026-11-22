@@ -374,13 +374,13 @@ test('Alarm doğru sekmeyi açar; geç kalırsa pencereye göre katılır veya v
     items = await listJoins(env);
     const expired = items.find((item) => item.id === late.item.id);
     assert.equal(expired.status, 'expired');
-    assert.equal(expired.statusText, 'Başlangıçtan 30 dakika geçti, katılınmadı.');
+    assert.equal(expired.statusText, 'Başlangıçtan 60 dakika geçti, katılınmadı.');
   } finally {
     env.harness.cleanup();
   }
 });
 
-test('Tam 30. dakikada katılır, bir milisaniye sonra katılmaz', async () => {
+test('Tam 60. dakikada katılır, bir milisaniye sonra katılmaz', async () => {
   const env = boot(T0);
   try {
     const edge = await saveJoin(env, 'https://meet.google.com/abc-defg-hij', T0 + 60000);
@@ -393,7 +393,7 @@ test('Tam 30. dakikada katılır, bir milisaniye sonra katılmaz', async () => {
     await env.fire({ name: Schedule.joinAlarmName(closed.item.id) });
     assert.equal(env.opened.length, 1);
     const items = await listJoins(env);
-    assert.equal(items.find((item) => item.id === closed.item.id).statusText, 'Başlangıçtan 30 dakika geçti, katılınmadı.');
+    assert.equal(items.find((item) => item.id === closed.item.id).statusText, 'Başlangıçtan 60 dakika geçti, katılınmadı.');
   } finally {
     env.harness.cleanup();
   }
@@ -555,7 +555,7 @@ test('Sahte sayfa: kapalı mikrofon ve kamerayla Katıl, altyazı mevcut kaydı 
   }
 });
 
-test('Sahte sayfa: Katılma isteği yenilenir, 30 dakika sonra vazgeçilir', async () => {
+test('Sahte sayfa: Katılma isteği yenilenir, 60 dakika sonra vazgeçilir', async () => {
   const env = boot(T0);
   const mediaCalls = { count: 0 };
   const api = loadJoin(mediaCalls);
@@ -625,7 +625,7 @@ test('Sahte sayfa: Katılma isteği yenilenir, 30 dakika sonra vazgeçilir', asy
     assert.equal(mediaCalls.count, 0);
     assert.equal(nameInput.getAttribute('value'), 'Kerem Yılmaz');
     const listed = await listJoins(env);
-    assert.equal(listed[0].statusText, 'Başlangıçtan 30 dakika geçti, katılınmadı.');
+    assert.equal(listed[0].statusText, 'Başlangıçtan 60 dakika geçti, katılınmadı.');
   } finally {
     env.harness.cleanup();
   }
@@ -1735,6 +1735,65 @@ test('participantCount ve yalnız kalma izleyicisi: önce başkaları görülmel
   assert.equal(watcher.update(group), false, 'biri dönerse sıfırlanır');
 });
 
+test('Zaman aşımı: «isteğinizi kimse yanıtlamadı» ekranında ve ana sayfada toplantı yeniden açılır, «Katıl»a basılmaz', async () => {
+  const api = loadJoin({ count: 0 });
+  let clock = T0;
+  function makeController(document, reopens) {
+    return api.createMeetJoin({
+      document: document,
+      now: function () { return clock; },
+      expectedPath: '/mtf-fscy-sxu',
+      reopen: function (reason) { reopens.push(reason); },
+      onStatus: function () {}
+    });
+  }
+  // 1) Meet'in zaman aşımı ekranı
+  const reopens1 = [];
+  const timedOut = doc({
+    children: [
+      el({ tag: 'p', text: 'Görüşmeye katılma isteğinizi kimse yanıtlamadı' }),
+      button('Ana ekrana dön'),
+      button('Geri bildirim gönder')
+    ]
+  });
+  timedOut.location = { pathname: '/mtf-fscy-sxu' };
+  const c1 = makeController(timedOut, reopens1);
+  await c1.tick();
+  assert.equal(reopens1.length, 1, 'zaman aşımında toplantı yeniden açılmalı');
+  await c1.tick();
+  assert.equal(reopens1.length, 1, '20 sn dolmadan tekrar açılmamalı');
+  clock += 25000;
+  await c1.tick();
+  assert.equal(reopens1.length, 2, 'süre dolunca yeniden denenmeli');
+
+  // 2) Ana sayfaya düşüldü: oradaki «Katıl» (kod girme) düğmesine basılmamalı
+  const reopens2 = [];
+  const homeJoin = button('Katıl');
+  let homePressed = 0;
+  homeJoin.click = function () { homePressed += 1; };
+  const home = doc({ children: [button('Ana menü'), homeJoin, button('Yeni toplantı')] });
+  home.location = { pathname: '/home' };
+  await makeController(home, reopens2).tick();
+  assert.equal(reopens2.length, 1, 'ana sayfadayken toplantı yeniden açılmalı');
+  assert.equal(homePressed, 0, '«Katıl»a basılmamalı');
+
+  // 3) Normal oda: yeniden açılmaz, katılma isteği gönderilir
+  const reopens3 = [];
+  const ask = button('Katılma isteği');
+  let asked = 0;
+  ask.click = function () { asked += 1; };
+  const room = doc({ children: [button('Mikrofonu aç'), button('Kamerayı açın'), ask] });
+  room.location = { pathname: '/mtf-fscy-sxu' };
+  await makeController(room, reopens3).tick();
+  assert.equal(reopens3.length, 0, 'normal odada yeniden açılmamalı');
+  assert.equal(asked, 1, 'katılma isteği gönderilmeli');
+});
+
+test('Katılım penceresi: toplantı 60 dakika geç açılsa da denenir', () => {
+  assert.equal(Schedule.JOIN_WINDOW_MS, 60 * 60 * 1000);
+  assert.match(Schedule.statusText('expired'), /60 dakika/);
+});
+
 test('Aygıt güvenliği: mikrofon/kamera durumu okunamıyorsa katılınmaz, kapalı okunuyorsa katılınır', async () => {
   const api = loadJoin({ count: 0 });
   async function tryJoin(deviceLabels) {
@@ -2139,7 +2198,7 @@ test('Planlı sekme denetçiyi kurar; pencere kapanmışsa kurmaz', async () => 
     });
     assert.equal(expired, true);
     assert.deepEqual(closedCalls, []);
-    assert.equal(closed.local.store.get(Schedule.STORAGE_KEY)[0].statusText, 'Başlangıçtan 30 dakika geçti, katılınmadı.');
+    assert.equal(closed.local.store.get(Schedule.STORAGE_KEY)[0].statusText, 'Başlangıçtan 60 dakika geçti, katılınmadı.');
   } finally {
     closed.cleanup();
   }

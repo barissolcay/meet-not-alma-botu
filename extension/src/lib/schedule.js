@@ -1,7 +1,7 @@
 /**
  * Planlı katılım — saf kurallar.
  *
- * Bağlantı doğrulama, 30 dakikalık pencere ve kullanıcıya görünen durum
+ * Bağlantı doğrulama, 60 dakikalık pencere ve kullanıcıya görünen durum
  * metinleri burada toplanır. DOM tıklaması ve chrome.alarms bu dosyada yoktur.
  *
  * UMD: tarayıcıda globalThis.MNASchedule, Node'da module.exports.
@@ -19,7 +19,7 @@
   'use strict';
 
   /** Katılma isteği bu süreden sonra yenilenmez. Başlangıç saatinden ölçülür. */
-  var JOIN_WINDOW_MS = 30 * 60 * 1000;
+  var JOIN_WINDOW_MS = 60 * 60 * 1000;
   /**
    * datetime-local dakika hassastır; içinde bulunulan dakika "geçmiş" sayılmaz.
    * Bundan eski bir saat kaydedilmez.
@@ -40,7 +40,7 @@
     blocked: 'Mikrofon veya kamera kapatılamadı; katılınmadı.',
     permission: 'Mikrofon/kamera izin penceresi geçilemedi. Toplantı sekmesinde izin verip mikrofonu ve kamerayı kapatın.',
     skipped: 'Mevcut kayıt yüzünden bu toplantı atlandı.',
-    expired: 'Başlangıçtan 30 dakika geçti, katılınmadı.',
+    expired: 'Başlangıçtan 60 dakika geçti, katılınmadı.',
     ended: 'Toplantı bitti, kayıt durduruldu.',
     removed: 'Toplantıdan çıkarıldınız, kayıt durduruldu.',
     callEnded: 'Arama sona erdi, kayıt durduruldu.',

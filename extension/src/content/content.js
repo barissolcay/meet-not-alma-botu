@@ -1011,6 +1011,12 @@
         deadlineAt: deadline,
         pollMs: 3000,
         autoStopWhenAlone: settings.autoStopWhenAlone !== false,
+        reopen: function () {
+          // Bekleme odası zaman aşımı ya da ana sayfaya düşüş: toplantıya geri dön.
+          if (payload.url && typeof location !== 'undefined' && location && typeof location.assign === 'function') {
+            location.assign(payload.url);
+          }
+        },
         shouldEnd: function () {
           return silenceExceeded() ? 'silence' : null;
         },
