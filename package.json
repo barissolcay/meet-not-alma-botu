@@ -1,6 +1,6 @@
 {
   "name": "meet-not-alma-botu",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "description": "Google Meet canlı altyazılarından konuşma dökümü çıkaran Chrome MV3 eklentisi. Ses kaydı yok, ağ isteği yok.",
   "license": "MIT",

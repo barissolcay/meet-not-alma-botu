@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Meet Not Alma Botu",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "minimum_chrome_version": "102",
   "description": "Meet altyazısından transkript alır. Planlı saatte sizin hesabınızla, mikrofon ve kamera kapalı katılır. Ses kaydetmez.",
   "permissions": ["storage", "downloads", "alarms"],
