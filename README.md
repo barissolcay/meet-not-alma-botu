@@ -1,5 +1,7 @@
 # Meet Not Alma Botu 📝
 
+> **In English:** A Chrome extension that takes notes for you in Google Meet. It joins a meeting at the time you set, writes a timestamped transcript with speaker names from Meet's live captions, and copies it with a ready-made prompt so your AI tool can summarise it. No audio recording, no network requests: everything stays on your computer. Full English guide: [README.en.md](README.en.md)
+
 **Toplantıyı kaçırmayın, notları unutmayın.** Google Meet toplantılarına planladığınız saatte katılır, konuşulanları yazıya döker ve özetini yapay zekâya yaptırmanız için hazır bir istemle birlikte kopyalar. English: [README.en.md](README.en.md)
 
 - ⏰ **Planlı katılım:** bağlantıyı ve saati girin; eklenti kendi hesabınızla, mikrofon ve kamera kapalı katılır, bitince ayrılır.
